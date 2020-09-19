@@ -11,13 +11,15 @@ import msg
 import word_lists
 import re
 
-
+# XX we should be able to collapse keyword symbol into a single token class'
+# MID TMID ASSIGN ARROW BLANK ALT COLON APPLYSUB etc.
 tokens = (
     'STRING',
     'CONTROLSEQ',
     'DECIMAL',
     'INTEGER',
     'SYMBOL',
+#    'KEY_SYMBOL',
     'SYMBOL_QED',
     'MAPSTO',
     'MID',
@@ -29,14 +31,14 @@ tokens = (
     'PERIOD',
     'COLON',
     'APPLYSUB',
-    'SLASH',
-    'SLASHDASH',
+    #'SLASH',
+    #'SLASHDASH',
     'COERCION',
     'LAMBDA',
     'PITY',
     'QUANTIFIER',
     'VAR',
-    'METAVAR',
+    #'METAVAR',
     'WORD',
     'ATOMIC_IDENTIFIER',
     'HIERARCHICAL_IDENTIFIER',
@@ -149,7 +151,7 @@ reserved_symbols = {
     '|->': 'MAPSTO', 
     '|'  : 'ALT', 
     '/'  : 'SLASH', 
-    '/-' : 'SLASHDASH',
+    #'/-' : 'SLASHDASH',
     '_'  : 'BLANK'
     }
 
@@ -184,6 +186,8 @@ def t_CONTROLSEQ(t):
     return t 
 
 tokenizer = lex.lex()
+
+
 
 
 
