@@ -27,8 +27,9 @@ def copy_token(tok,attr):
 
 def mk_token(attr={'type':'INTEGER','value':'1'}):
     """make a new token with attributes given by dictionary attr
-    For example,
-         mk_token({'type':'COLOR','value':'blue'}).
+
+    >>> mk_token({'type':'COLOR','value':'blue'})
+    LexToken(COLOR,'blue',0,0)
     """
     #tok = copy.copy(mk_token._tok)
     #for v in attr:
@@ -484,7 +485,15 @@ def synonym_add(ts):
         synonym[s] = js
         
 def synonymize(s:str) -> str:
-    """get canonical synonymized form of s. item assumed lower case singular."""
+    """get canonical synonymized form of s. item assumed lower case singular.
+
+    >>> synonymize('')
+    ''
+
+    >>> synonymize('unique')
+    'unique'
+
+    """
     if len(s) < MIN_LEN_SYNONYM:
         return s
     return synonym.get(s,s)
@@ -502,7 +511,12 @@ def synw(tok) -> str:
     return synonymize(s)
 
 def can_wordify(tok) -> bool:
-    """True if token can be converted to a word token"""
+    """True if token can be converted to a word token
+    
+    >>> can_wordify(mk_token({'type': 'SYMBOL', 'value': '+'}))
+    False
+
+    """
     return tok.type == 'WORD' or (tok.type == 'VAR' and len(tok.value)==1 and tok.value.isalpha())
 
 def wordify(tok):
@@ -586,7 +600,7 @@ def first_word(ss:str) -> Parse: #was someword
 #            raise ParseNoCatch(msg)
 #    return Parse(f)
 
-def commit(msg:str,probe:Parse,pr:Parse) -> Parse:
+def commit(msg:str, probe:Parse, pr:Parse) -> Parse:
     """if trial_parse does not fail, discard, then apply pr without catching"""
     def f(item):
         probe.process(item)
@@ -690,3 +704,7 @@ def or_nonempty_list(pr:Parse) -> Parse:
     """construct parser for 'or' separated list"""
     return Parse.separated_nonempty_list(pr,next_value('or'))
 
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
